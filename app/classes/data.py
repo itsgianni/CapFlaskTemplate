@@ -22,6 +22,7 @@ class User(UserMixin, Document):
     lname = StringField()
     email = EmailField()
     image = FileField()
+    role = StringField()
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

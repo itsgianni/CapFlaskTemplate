@@ -8,6 +8,7 @@ from flask_moment import Moment
 import base64
 from flask_login import LoginManager
 from flask_mail import Mail
+import certifi
 
 app = Flask(__name__)
 #app.jinja_options['extensions'].append('jinja2.ext.do')
@@ -17,7 +18,8 @@ from app.utils.secrets import getSecrets
 
 secrets = getSecrets()
 
-connect(secrets['MONGO_DB_NAME'], host=secrets['MONGO_HOST'])
+connect(secrets['MONGO_DB_NAME'], host=secrets['MONGO_HOST'], tlsCAFile=certifi.where())
+
 moment = Moment(app)
 
 login = LoginManager(app)
