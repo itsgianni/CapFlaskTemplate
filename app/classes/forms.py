@@ -57,7 +57,8 @@ class ProfileForm(FlaskForm):
     fname = StringField('First Name', validators=[DataRequired()])
     lname = StringField('Last Name', validators=[DataRequired()]) 
     image = FileField("Image") 
-    role = SelectField('Experience',choices=[("Beginner","Beginner"),("Intermediate","Intermediate"),("Expert","Expert")])
+    role = SelectField('Age',choices=[("1-19","1-19"),("20-39","20-39"),("40-59","40-59"), ("60+","60+")])
+    role2 = SelectField('Net Worth',choices=[("$0 - $999","$0 - $999"),("$1,000 - $99,999","$1,000 - $99,999"),("$100,000 - $1,000,000","$100,000 - $1,000,000"), ("$1,000,000 - $10,000,000","$1,000,000 - $10,000,000"), ("$10,000,000+","$10,000,000+")])
     submit = SubmitField('Post')
 
 class PostForm(FlaskForm):

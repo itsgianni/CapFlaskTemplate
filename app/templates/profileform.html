@@ -35,7 +35,15 @@
             {{ form.role.label }}<br>
             {{ form.role() }}<br>
             {% for error in form.role.errors %}
-            Experience: {{current_user.role}} <br>
+            Age: {{current_user.role}} <br>
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.role2.label }}<br>
+            {{ form.role2() }}<br>
+            {% for error in form.role2.errors %}
+            Net Worth: {{current_user.role2}} <br>
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
