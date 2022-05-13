@@ -4,6 +4,7 @@
 # fields have types like IntField, StringField etc.  This uses the Mongoengine Python Library. When 
 # you interact with the data you are creating an onject that is an instance of the class.
 
+from os import link
 from app import app
 from flask import flash
 from flask_login import UserMixin
@@ -56,9 +57,20 @@ class Post(Document):
         'ordering': ['-createdate']
     }
 
+class Question(Document):
+    author = ReferenceField('User',reverse_delete_rule=CASCADE) 
+    subject = StringField()
+    content = StringField()
+    createdate = DateTimeField(default=dt.datetime.utcnow)
+    modifydate = DateTimeField()
+
+    meta = {
+        'ordering': ['-createdate']
+    }
+
 class Comment(Document):
     author = ReferenceField('User',reverse_delete_rule=CASCADE) 
-    post = ReferenceField('Post',reverse_delete_rule=CASCADE)
+    question = ReferenceField('Question',reverse_delete_rule=CASCADE)
     # This could be used to allow comments on comments
     # comment = ReferenceField('Comment',reverse_delete_rule=CASCADE)
     content = StringField()

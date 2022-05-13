@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if question %}
+
+<p>{{moment(question.createdate).calendar()}} by {{question.author.username}} 
+{% if question.modifydate %}
+    modified {{moment(question.modifydate).calendar()}}</p>
+{% endif %}
+<br>
+    {% if question.author == current_user %}
+        <a data-toggle="tooltip" data-placement="top" title="Delete Question" href="/question/delete/{{question.id}}">
+            <img width="40" class="bottom-image" src="/static/delete.png">
+        </a>
+        <a data-toggle="tooltip" data-placement="top" title="Edit Question" href="/question/edit/{{question.id}}">
+            <img width="40" class="bottom-image" src="/static/edit.png">
+        </a>
+    {% endif %}
+
+    <h1 class="display-5">{{question.subject}}</h1>
+    <p class="fs-3 text-break">
+        {% if question.author.image %}
+            <img width="120" class="img-thumbnail float-start me-2" src="data:image;base64,{{base64encode(question.author.image.read())}}">
+        {% endif %}
+            {{question.content}}
+    </p>
+    <a href="/comment/new/{{question.id}}" class="btn btn-primary btn-sm" role="button">New Answer</a>
+
+    <div class="ms-5">
+    {% if comments %}
+    <h1 class="display-5">Answers</h1>
+    {% for comment in comments %}
+        {% if current_user == comment.author %}
+            <a href="/comment/delete/{{comment.id}}"><img width="20" src="/static/delete.png"></a> 
+            <a href="/comment/edit/{{comment.id}}"><img width="20" src="/static/edit.png"></a>
+        {% endif %}
+        <p>{{moment(comment.createdate).calendar()}} {{comment.author.username}}</p>
+        {% if comment.modifydate %}
+           <p>modified {{moment(comment.modifydate).calendar()}}</p> 
+        {% endif %}
+        <br>
+        <p class="fs-3">
+            {{comment.content}}
+        </p>
+    {% endfor %}
+    {% else %}
+        <h1 class="display-5">No Answers</h1>
+    {% endif %}
+    </div>
+{% else %}
+    <h1 class="display-5">No Question</h1>
+{% endif %}
+
+{% endblock %}

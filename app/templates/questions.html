@@ -4,47 +4,41 @@
 
 <div class="row">
     <div class="col-4">
-        <h1 class="display-1">All Posts</h1>
+        <h1 class="display-2">All Questions</h1>
     </div>
     <div class="col">
-        <a href="/post/new" class="btn btn-primary btn-sm mt-5" role="button">New Post</a>
+        <a href="/question/new" class="btn btn-primary btn-sm mt-5" role="button">New Question</a>
     </div>
 </div>
 
-{% if posts %}
-    {% for post in posts %}
+{% if questions %}
+    {% for question in questions %}
         <div class="row border-bottom">
             <div class="col-2">
                 {% if loop.index == 1 %}
                 <h3 class="display-5">Date</h3>
                 {% endif %}
 
-                <a href="/post/{{post.id}}">
-                    {{moment(post.createdate).calendar()}}
+                <a href="/question/{{question.id}}">
+                    <p>{{moment(question.createdate).calendar()}}</p>
                 </a>
             </div>
             <div class="col-2">
                 {% if loop.index == 1 %}
                 <h3 class="display-5">User</h3>
                 {% endif %}
-                {{post.author.username}}
+               <p> {{question.author.username}}</p>
             </div>
             <div class="col-3">
                 {% if loop.index == 1 %}
                     <h3 class="display-5">Subject</h3>
                 {% endif %}
-                {{post.subject}}
-            </div>
-            <div class="col-4">
-                {% if loop.index == 1 %}
-                    <h3 class="display-5">Reaction</h3>
-                {% endif %}
-                {{post.reactions}}
+                <p>{{question.subject}}</p>
             </div>
         </div>
     {% endfor %}
 {% else %}
-    <h1>No Posts</h1>
+    <h1>No Questions</h1>
 {% endif %}
 
 {% endblock %}

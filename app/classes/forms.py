@@ -68,3 +68,8 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
     content = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Comment')
+
+class QuestionForm(FlaskForm):
+    subject = StringField('Subject', validators=[DataRequired()])
+    content = TextAreaField('Question', validators=[DataRequired()])
+    submit = SubmitField('Post')

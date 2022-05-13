@@ -1,14 +1,6 @@
 .bottom-image img{
     vertical-align:bottom;
     }
-
-.aboutme{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    size: 25px;
-    }
     
 hr {
     display: block;

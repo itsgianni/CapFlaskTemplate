@@ -10,15 +10,15 @@
             {% endfor %}
         {% endfor %}
 
-        <h1 class="display-5">{{post.subject}}</h1>
-        {{post.content}} <br>
-        <h1 class="display-5">New Comment</h1>
+        <h1 class="display-5">{{question.subject}}</h1>
+        {{question.content}} <br>
+        <h1 class="display-5">New Answer</h1>
 
         <form method=post>
             {{ form.hidden_tag() }}
             
             {{ form.content.label }} <br>
-            {{ form.content(cols=64) }}
+            {{ form.content(cols=64) }} <br>
             <!--List the errors for this field-->
             {% for error in form.content.errors %}
                 <span style="color: red;">[{{ error }}]</span>

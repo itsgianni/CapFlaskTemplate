@@ -19,17 +19,17 @@
     </div>
     <div class="col display-5">
         {% if current_user.fname and current_user.lname %}
-            Real Name: {{current_user.fname}}  {{current_user.lname}} <br>
+          <p>  Real Name: {{current_user.fname}}  {{current_user.lname}} <br>
         {% endif %}
-        
+       
         Username: {{current_user.username}} <br>
         Email: {{current_user.email}} <br>
         Age: {{current_user.role}} <br>
-        Net Worth: {{current_user.role2}}
+        Net Worth: {{current_user.role2}}''
+        </p>
     </div>
 </div>
 <br>
-
 
 
 {% endblock %}

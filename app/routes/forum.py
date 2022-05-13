@@ -97,6 +97,7 @@ def postNew():
             subject = form.subject.data,
             content = form.content.data,
             author = current_user.id,
+            reaction = form.content.data,
             # This sets the modifydate to the current datetime.
             modifydate = dt.datetime.utcnow
         )
@@ -140,6 +141,7 @@ def postEdit(postID):
         editPost.update(
             subject = form.subject.data,
             content = form.content.data,
+            reaction = form.content.data,
             modifydate = dt.datetime.utcnow
         )
         # After updating the document, send the user to the updated post using a redirect.
@@ -149,6 +151,7 @@ def postEdit(postID):
     # and place it in the form object so it will be displayed to the user on the template.
     form.subject.data = editPost.subject
     form.content.data = editPost.content
+    form.content.data = editPost.reaction
 
     # Send the user to the post form that is now filled out with the current information
     # from the form.
@@ -162,45 +165,3 @@ def postEdit(postID):
 # about how comments are related to posts.  Additionally, take a look at data.py to see how the
 # relationship is defined in the Post and the Comment collections.
 
-@app.route('/comment/new/<postID>', methods=['GET', 'POST'])
-@login_required
-def commentNew(postID):
-    post = Post.objects.get(id=postID)
-    form = CommentForm()
-    if form.validate_on_submit():
-        newComment = Comment(
-            author = current_user.id,
-            post = postID,
-            content = form.content.data
-        )
-        newComment.save()
-        return redirect(url_for('post',postID=postID))
-    return render_template('commentform.html',form=form,post=post)
-
-@app.route('/comment/edit/<commentID>', methods=['GET', 'POST'])
-@login_required
-def commentEdit(commentID):
-    editComment = Comment.objects.get(id=commentID)
-    if current_user != editComment.author:
-        flash("You can't edit a comment you didn't write.")
-        return redirect(url_for('post',postID=editComment.post.id))
-    post = Post.objects.get(id=editComment.post.id)
-    form = CommentForm()
-    if form.validate_on_submit():
-        editComment.update(
-            content = form.content.data,
-            modifydate = dt.datetime.utcnow
-        )
-        return redirect(url_for('post',postID=editComment.post.id))
-
-    form.content.data = editComment.content
-
-    return render_template('commentform.html',form=form,post=post)   
-
-@app.route('/comment/delete/<commentID>')
-@login_required
-def commentDelete(commentID): 
-    deleteComment = Comment.objects.get(id=commentID)
-    deleteComment.delete()
-    flash('The comments was deleted.')
-    return redirect(url_for('post',postID=deleteComment.post.id)) 

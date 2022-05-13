@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+        <h1></h1>
+
+            <!--List all errors in a group at the top-->
+            {% for field in form.errors %}
+                {% for error in form.errors[field] %}
+                    <div class="alert alert-error">
+                        <strong>Error!</strong>{{field}}: {{error}}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.subject.label }} <br>
+                {{ form.subject(size=64) }}
+                <!--List the errors for this field-->
+                {% for error in form.subject.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.content.label }} <br>
+                {{ form.content(cols=64, rows=10) }}
+                <!--List the errors for this field-->
+                {% for error in form.content.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{form.submit()}}
+            </p>
+        </form>
+
+{% endblock %}
